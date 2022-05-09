@@ -1,4 +1,4 @@
-vim.g.mapleader = " "
+vim.g.mapleader = ","
 vim.g.localleader = " "
 
 local map = vim.api.nvim_set_keymap
@@ -13,7 +13,10 @@ map("n", "<Up>", "<Nop>", opt)
 map("n", "<Down>", "<Nop>", opt)
 
 -- jj 代替<Esc> 切换 Normal Mode
-map("i", "jj", "<Esc>", opt)
+-- map("i", "jj", "<Esc>", opt)
+-- 0 光标移动至有字符开始的行首，9 光标移动到行尾
+map("n", "0", "^", opt)
+map("n", "9", "$", opt)
 
 -- 窗口移动
 map("n", "<C-j>", "<C-W>j", opt)
@@ -23,9 +26,8 @@ map("n", "<C-l>", "<C-W>l", opt)
 
 -- 插件映射配置
 
--- nvim-tree
-
--- bufferline
+-- neo-tree
+map("n", "<Leader>t", ":NeoTreeShowToggle<CR>", opt)
 
 local pluginKeys = {}
 
@@ -57,4 +59,3 @@ pluginKeys.cmp = function(cmp)
 end
 
 return pluginKeys
-

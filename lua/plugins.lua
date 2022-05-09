@@ -1,24 +1,26 @@
 return require('packer').startup(function()
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
-    -- gruvbox theme
+    -- onedrak theme
+    use 'navarasu/onedark.nvim'
+    -- one theme
+    use 'rakr/vim-one'
+    -- neo tree
     use {
-        "ellisonleao/gruvbox.nvim",
-        requires = {"rktjmp/lush.nvim"}
-    }
-    -- nord theme
-    use 'shaunsingh/nord.nvim'
-    -- zephyr theme
-    use 'glepnir/zephyr-nvim'
-    -- nvim-tree
-    use {
-        'kyazdani42/nvim-tree.lua',
-        requires = 'kyazdani42/nvim-web-devicons'
-    }
-     -- bufferline 
-    use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v2.x",
+      requires = { 
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+      },
+     }
       -- treesitter
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use { 
+        'nvim-treesitter/nvim-treesitter',
+        before = "neorg",
+    }
+
     -- lspconfig
     use {'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer'}
       -- nvim-cmp
@@ -50,13 +52,68 @@ return require('packer').startup(function()
         'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
-    -- Comment
+        -- todo comment
     use {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup {
+            -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+        }
+      end
     }
-    -- toogleterm
-    use {"akinsho/toggleterm.nvim"}
+    -- telescope 
+    use {
+      'nvim-telescope/telescope.nvim',
+      requires = 'nvim-lua/plenary.nvim'
+    }
+    use {
+      'nvim-telescope/telescope-project.nvim',
+    }
+    -- alpha-nvim 
+    use {
+      'goolord/alpha-nvim',
+       config = function ()
+          -- default config
+          -- require'alpha'.setup(require'alpha.themes.dashboard'.config)
+         local alpha = require'alpha'
+         local dashboard = require'alpha.themes.dashboard'
+         dashboard.section.header.val = {
+             [[                               __                ]],
+             [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
+             [[ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
+             [[/\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+             [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+             [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+         }
+         dashboard.section.buttons.val = {
+             dashboard.button( "p", "  Open Project" , ":Telescope project<CR>"),
+             dashboard.button( "q", "  Quit NVIM" , ":qa<CR>"),
+         }
+         local handle = io.popen('fortune')
+         local fortune = handle:read("*a")
+         handle:close()
+         dashboard.section.footer.val = fortune
+
+         dashboard.config.opts.noautocmd = true
+
+         vim.cmd[[autocmd User AlphaReady echo 'ready']]
+
+         alpha.setup(dashboard.config)
+      end
+    }
+   use {
+       "nvim-neorg/neorg",
+       config = function()
+          require('neorg').setup {
+            load = { 
+              ["core.defaults"] = {},
+              ["core.norg.concealer"] = {}
+            }
+          }
+       end,
+       requires = "nvim-lua/plenary.nvim"
+   }
 end)

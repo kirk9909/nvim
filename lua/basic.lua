@@ -6,16 +6,18 @@ vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 -- 使用行号
 vim.wo.number = true
+-- 相对行号
+vim.wo.relativenumber = true
 -- 高亮所在行
 vim.wo.cursorline = true
 -- 显示左侧图标指示列
 vim.wo.signcolumn = "yes"
 -- 右侧参考线，超过表示代码太长了，考虑换行
 vim.wo.colorcolumn = "80"
--- 缩进2个空格等于一个Tab
-vim.o.tabstop = 2
-vim.bo.tabstop = 2
-vim.o.softtabstop = 2
+-- 缩进4个空格等于一个Tab
+vim.o.tabstop = 4
+vim.bo.tabstop = 4
+vim.o.softtabstop = 4
 vim.o.shiftround = true
 -- >> << 时移动长度
 vim.o.shiftwidth = 2
@@ -57,22 +59,22 @@ vim.o.swapfile = false
 vim.o.updatetime = 300
 -- 设置 timeoutlen 为等待键盘快捷键连击时间200毫秒，可根据需要设置
 -- 遇到问题详见：https://github.com/nshen/learn-neovim-lua/issues/1
-vim.o.timeoutlen = 200
+vim.o.timeoutlen = 300
 -- split window 从下边和右边出现
 vim.o.splitbelow = true
 vim.o.splitright = true
 -- 自动补全不自动选中
 vim.g.completeopt = "menu,menuone,noselect,noinsert"
 -- 样式
-vim.o.background = "dark"
 vim.o.termguicolors = true
 vim.opt.termguicolors = true
 -- 不可见字符的显示，这里只把空格显示为一个点
 vim.o.list = true
-vim.o.listchars = "space:·"
+-- indent char
+-- vim.o.listchars = "space:·"
 -- 补全增强
 vim.o.wildmenu = true
--- Dont' pass messages to |ins-completin menu|
+--kDont' pass messages to |ins-completin menu|
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.pumheight = 10
 -- always show tabline
